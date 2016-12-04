@@ -12,7 +12,7 @@ public:
 
     auto count() const -> size_t;
     auto push(const T & element) -> void;
-    auto pop() -> void;
+    auto pop() -> T;
 
 private:
     T * _array;
@@ -60,9 +60,12 @@ auto stack<T>::push(const T & element) -> void
 }
 
 template <typename T>
-auto stack<T>::pop() -> void
+auto stack<T>::pop() -> T
 {
-    _count--;
+    if (_count)
+        return _array[--_count];
+    else
+        throw std::underflow_error("Stack is already empty.");
 }
 
 #endif
