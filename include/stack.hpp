@@ -2,6 +2,7 @@
 #define STACK_HPP
 
 #include <iostream>
+#include <stdexcept>
 
 template <typename T>
 class stack
