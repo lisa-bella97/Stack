@@ -44,7 +44,7 @@ auto stack<T>::push(const T & element) -> void
         _array_size = (_array_size == 0) ? 1 : 2 * _count;
 
         auto temp = new T[_array_size];
-        memcpy(temp, _array, sizeof(_array) * _count);
+        memcpy(temp, _array, sizeof(T) * _count);
         
         delete [] _array;
         
