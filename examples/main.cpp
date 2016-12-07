@@ -11,19 +11,14 @@ int main()
     st.push(7);
     std::cout << st.count() << std::endl;
 
-    try
+    while (!st.empty())
     {
-        std::cout << st.pop() << std::endl;
-        std::cout << st.pop() << std::endl;
-        std::cout << st.pop() << std::endl;
-        std::cout << st.pop() << std::endl;
-    }
-    catch (std::underflow_error & error)
-    {
-        std::cout << error.what() << std::endl;
+        std::cout << *st.top() << std::endl;
+        st.pop();
     }
 
-    std::cout << st.count() << std::endl;
+    if (st.top())
+        std::cout << st.count() << std::endl;
 
     return 0;
 }

@@ -2,7 +2,6 @@
 #define STACK_HPP
 
 #include <cstring>
-#include <stdexcept>
 
 template <typename T>
 class stack
@@ -11,9 +10,11 @@ public:
     stack();
     ~stack();
 
-    auto count() const -> size_t;
-    auto push(const T & element) -> void;
-    auto pop() -> T;
+    auto count() const noexcept -> size_t;
+    auto push(const T & element) noexcept -> void;
+    auto pop() noexcept -> void;
+    auto top() const noexcept -> const T *;
+    auto empty() const noexcept -> bool;
 
 private:
     T * _array;
@@ -31,13 +32,13 @@ stack<T>::~stack()
 }
 
 template <typename T>
-auto stack<T>::count() const -> size_t
+auto stack<T>::count() const noexcept -> size_t
 {
     return _count;
 }
 
 template <typename T>
-auto stack<T>::push(const T & element) -> void
+auto stack<T>::push(const T & element) noexcept -> void
 {
     if (_count == _array_size)
     {
@@ -45,7 +46,7 @@ auto stack<T>::push(const T & element) -> void
 
         auto temp = new T[_array_size];
         memcpy(temp, _array, sizeof(T) * _count);
-        
+
         delete [] _array;
         
         _array = temp;
@@ -55,12 +56,25 @@ auto stack<T>::push(const T & element) -> void
 }
 
 template <typename T>
-auto stack<T>::pop() -> T
+auto stack<T>::pop() noexcept -> void
 {
     if (_count)
-        return _array[--_count];
+        _count--;
+}
+
+template <typename T>
+auto stack<T>::top() const noexcept -> const T *
+{
+    if (_count)
+        return &_array[_count - 1];
     else
-        throw std::underflow_error("Stack is already empty.");
+        return nullptr;
+}
+
+template <typename T>
+auto stack<T>::empty() const noexcept -> bool
+{
+    return !_count;
 }
 
 #endif
