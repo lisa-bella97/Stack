@@ -43,13 +43,12 @@ auto stack<T>::push(const T & element) -> void
     {
         _array_size = (_array_size == 0) ? 1 : 2 * _count;
 
-        auto temp = new T[_count];
+        auto temp = new T[_array_size];
         memcpy(temp, _array, sizeof(_array) * _count);
+        
         delete [] _array;
         
-        _array = new T[_array_size];
-        memcpy(_array, temp, sizeof(temp) * _count);
-        delete [] temp;
+        _array = temp;
     }
 
     _array[_count++] = element;
