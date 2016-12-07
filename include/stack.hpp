@@ -1,7 +1,7 @@
 #ifndef STACK_HPP
 #define STACK_HPP
 
-#include <iostream>
+#include <cstring>
 #include <stdexcept>
 
 template <typename T>
@@ -44,16 +44,11 @@ auto stack<T>::push(const T & element) -> void
         _array_size = (_array_size == 0) ? 1 : 2 * _count;
 
         auto temp = new T[_count];
-
-        for (auto i = 0; i < _count; i++)
-            temp[i] = _array[i];
-
+        memcpy(temp, _array, sizeof(_array) * _count);
         delete [] _array;
+        
         _array = new T[_array_size];
-
-        for (auto i = 0; i < _count; i++)
-            _array[i] = temp[i];
-
+        memcpy(_array, temp, sizeof(temp) * _count);
         delete [] temp;
     }
 
