@@ -44,19 +44,19 @@ auto stack<T>::push(const T & element) noexcept -> void
     if (_count == _array_size)
     {
         _array_size = (_array_size == 0) ? 1 : 2 * _count;
-        auto temp = new T[_array_size];
 
         try
         {
+            auto temp = new T[_array_size];
             std::copy(_array, _array + _count, temp);
+            delete [] _array;
+            _array = temp;
         }
         catch (std::exception & ex)
         {
             std::cout << ex.what() << std::endl;
+            return;
         }
-
-        delete [] _array;
-        _array = temp;
     }
 
     _array[_count++] = element;
