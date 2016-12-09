@@ -1,5 +1,6 @@
 #include <stack.hpp>
 #include <iostream>
+#include <stdexcept>
 
 class Widget
 {
