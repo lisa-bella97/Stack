@@ -2,7 +2,6 @@
 #define STACK_HPP
 
 #include <algorithm>
-#include <iostream>
 
 template <typename T>
 class stack
@@ -54,15 +53,20 @@ auto stack<T>::push(const T & element) noexcept -> void
             delete [] _array;
             _array = temp;
         }
-        catch (std::exception & ex)
+        catch (...)
         {
             delete [] temp;
-            std::cout << ex.what() << std::endl;
             return;
         }
     }
 
-    _array[_count++] = element;
+    try
+    {
+        _array[_count] = element;
+        _count++;
+
+    }
+    catch (...) {}
 }
 
 template <typename T>
