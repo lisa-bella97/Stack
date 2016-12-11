@@ -25,13 +25,13 @@ allocator<T>::allocator(size_t size)
 {
     _size = size;
     _count = 0;
-    _ptr = new T[_size];
+    _ptr = static_cast<T*>(::operator new(size * sizeof(T)));
 }
 
 template <typename T>
 allocator<T>::~allocator()
 {
-    delete [] _ptr;
+    ::operator delete(_ptr);
 }
 
 template <typename T>
