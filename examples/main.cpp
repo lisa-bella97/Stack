@@ -30,12 +30,12 @@ private:
 };
 
 size_t Widget::count = 0;
-const size_t Widget::max_count = 4;
+const size_t Widget::max_count = 10;
 
 int main()
 {
     Widget w1(1), w2(5), w3(8), w4(-3), w5(2);
-    stack<Widget> st;
+    stack<Widget> st(5);
     std::cout << st.count() << std::endl;
 
     st.push(w1);
