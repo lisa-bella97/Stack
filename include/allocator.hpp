@@ -48,7 +48,7 @@ auto allocator<T>::allocate() -> void
     if (_count == _size)
     {
         auto size = (_size == 0) ? 1 : 2 * _count;
-        allocator<T> a(_size);
+        allocator<T> a(size);
         std::copy(_ptr, _ptr + _count, a._ptr);
         swap(a);
         _size = size;
