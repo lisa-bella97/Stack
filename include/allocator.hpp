@@ -31,15 +31,20 @@ allocator<T>::allocator(size_t size)
 template <typename T>
 allocator<T>::~allocator()
 {
-    ::operator delete(_ptr);
+    delete [] _ptr;
 }
 
 template <typename T>
 auto allocator<T>::swap(allocator & other) -> void
 {
-	auto temp(std::move(_ptr));
-	_ptr = std::move(other._ptr); 
-	other._ptr = std::move(temp);
+	auto temp_ptr(std::move(_ptr));
+    auto temp_size(std::move(_size));
+    
+	_ptr = std::move(other._ptr);
+    _size = std::move(other._size);
+    
+	other._ptr = std::move(temp_ptr);
+    other._size = std::move(temp_size);
 }
 
 template <typename T>
@@ -51,7 +56,6 @@ auto allocator<T>::allocate() -> void
         allocator<T> a(size);
         std::copy(_ptr, _ptr + _count, a._ptr);
         swap(a);
-        _size = size;
     }
 }
 
