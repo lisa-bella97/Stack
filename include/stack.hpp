@@ -2,6 +2,7 @@
 #define STACK_STACK_HPP
 
 #include "allocator.hpp"
+#include <stdexcept>
 
 template <typename T>
 class stack : private allocator<T>
@@ -12,7 +13,7 @@ public:
     auto count() const noexcept -> size_t;
     auto push(const T & element) noexcept -> void;
     auto pop() noexcept -> void;
-    auto top() const noexcept -> const T *;
+    auto top() const /* strong */ -> T;
     auto empty() const noexcept -> bool;
 };
 
@@ -45,12 +46,12 @@ auto stack<T>::pop() noexcept -> void
 }
 
 template <typename T>
-auto stack<T>::top() const noexcept -> const T *
+auto stack<T>::top() const /* strong */ -> T
 {
     if (allocator<T>::_count)
-        return &allocator<T>::_ptr[allocator<T>::_count - 1];
+        return allocator<T>::_ptr[allocator<T>::_count - 1];
     else
-        return nullptr;
+        throw std::underflow_error("Stack is already empty.");
 }
 
 template <typename T>

@@ -9,31 +9,29 @@ SCENARIO("top method must return the last one")
         st.push(1);
         st.push(2);
 
-        WHEN("top an element")
+        WHEN("get the top of the stack")
         {
             auto elem = st.top();
 
-            THEN("the element must be equal to 2")
+            THEN("the top must be equal to 2")
             {
-                REQUIRE(*elem == 2);
+                REQUIRE(elem == 2);
             }
         }
     }
 }
 
-SCENARIO("if stack is empty, top method must return nullptr")
+SCENARIO("if stack is empty, top method must throw an exception")
 {
-    GIVEN("an empty stack")
+    GIVEN("empty stack")
     {
         stack<int> st;
 
-        WHEN("trying to top")
+        WHEN("trying to get the top of the stack")
         {
-            auto elem = st.top();
-
-            THEN("the element must be equal to nullptr")
+            THEN("an exception must be thrown")
             {
-                REQUIRE(elem == nullptr);
+                REQUIRE_THROWS_AS(st.top(), std::underflow_error &);
             }
         }
     }

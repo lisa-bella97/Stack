@@ -1,6 +1,5 @@
 #include <stack.hpp>
 #include <iostream>
-#include <stdexcept>
 
 class Widget
 {
@@ -47,12 +46,18 @@ int main()
 
     while (!st.empty())
     {
-        std::cout << st.top()->get_a() << std::endl;
+        std::cout << st.top().get_a() << std::endl;
         st.pop();
     }
-
-    if (st.top())
-        std::cout << st.count() << std::endl;
+    
+    try
+    {
+        std::cout << st.top().get_a() << std::endl;
+    }
+    catch (std::underflow_error & error)
+    {
+        std::cout << error.what() << std::endl;
+    }
 
     return 0;
 }
