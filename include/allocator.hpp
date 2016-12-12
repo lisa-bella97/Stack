@@ -25,7 +25,7 @@ allocator<T>::allocator(size_t size)
 {
     _size = size;
     _count = 0;
-    _ptr = static_cast<T*>(::operator new(size * sizeof(T)));
+    _ptr = static_cast<T*>(::operator new(_size * sizeof(T)));
 }
 
 template <typename T>
@@ -37,9 +37,9 @@ allocator<T>::~allocator()
 template <typename T>
 auto allocator<T>::swap(allocator & other) -> void
 {
-    auto temp_ptr = _ptr;
-    _ptr = other._ptr;
-    other._ptr = temp_ptr;
+	auto temp(std::move(_ptr));
+	_ptr = std::move(other._ptr); 
+	other._ptr = std::move(temp);
 }
 
 template <typename T>
@@ -54,6 +54,5 @@ auto allocator<T>::allocate() -> void
         _size = size;
     }
 }
-
 
 #endif
