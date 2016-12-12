@@ -37,13 +37,13 @@ allocator<T>::~allocator()
 template <typename T>
 auto allocator<T>::swap(allocator & other) -> void
 {
-	auto temp_ptr(std::move(_ptr));
+    auto temp_ptr(std::move(_ptr));
     auto temp_size(std::move(_size));
     
-	_ptr = std::move(other._ptr);
+    _ptr = std::move(other._ptr);
     _size = std::move(other._size);
     
-	other._ptr = std::move(temp_ptr);
+    other._ptr = std::move(temp_ptr);
     other._size = std::move(temp_size);
 }
 
